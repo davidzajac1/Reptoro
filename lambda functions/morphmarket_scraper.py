@@ -1,5 +1,5 @@
 from urllib.request import Request, urlopen
-from Animal import Animal
+from scrapers import Scraper
 from random import randint
 import pandas as pd
 import psycopg2, json, time, boto3, botocore
@@ -49,24 +49,13 @@ def lambda_handler(event, context):
 
     urls.pop(0)
 
+    s = Scraper()
+
     errors = 0
     df = pd.DataFrame()
     for url in urls:
-        try:
-            df = df.append(Animal(f"https://www.morphmarket.com{url}").scrape(event['sessionid'], event['scrape_date']), ignore_index=True)
-            time.sleep(randint(150,250)/100)
-        except Exception as e:
-            errors = errors + 1
-            print(e)
-            print(url)
-            time.sleep(2)
-            try:
-                df = df.append(Animal(f"https://www.morphmarket.com{url}").scrape(event['sessionid'], event['scrape_date']), ignore_index=True)
 
-            except Exception as e:
-                errors = errors + 1
-                print(e)
-
+        df = df.append(s.animal_scraper(f"https://www.morphmarket.com{url}", event['sessionid'], retries = 2, event['scrape_date']), ignore_index=True)
 
     df.to_sql('master', con=event['con'], schema='morphmarket', if_exists='append', index=False)
 

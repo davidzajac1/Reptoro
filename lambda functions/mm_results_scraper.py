@@ -2,12 +2,12 @@ from bs4 import BeautifulSoup
 from urllib.request import urlopen, Request
 from random import randint
 import json, boto3, time
-from Results_Page import Results_Page
-
+from scrapers import Scraper
 
 def lambda_handler(event, context):
 
     s3 = boto3.client('s3')
+    s = Scraper()
 
     count = 0
     result = []
@@ -16,7 +16,7 @@ def lambda_handler(event, context):
         time.sleep(randint(100,200)/100)
 
         try:
-            for animal in Results_Page(page,event['min_price'],event['max_price']).scrape(event['sessionid']):
+            for animal in s.results_page_scraper(event['sessionid'], event['max_price'], event['min_price'], page):
                 result.append(animal)
 
         except Exception as e:

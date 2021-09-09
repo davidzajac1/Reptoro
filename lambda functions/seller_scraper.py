@@ -2,7 +2,7 @@ from urllib.request import Request, urlopen
 import pandas as pd
 from random import randint
 import boto3, botocore, time, psycopg2, json
-from Seller import Seller
+from scrapers import Scraper
 
 
 def lambda_handler(event, context):
@@ -48,23 +48,13 @@ def lambda_handler(event, context):
 
     urls.pop(0)
 
+    s = Scraper()
+
     errors = 0
     df = pd.DataFrame()
     for url in urls:
-        try:
-            df = df.append(Seller(f"https://www.morphmarket.com/stores/{url}").scrape(event['SCRAPEDATE']), ignore_index=True)
-            time.sleep(randint(150,250)/100)
-        except Exception as e:
-            errors = errors + 1
-            print(e)
-            print(url)
-            time.sleep(2)
-            try:
-                df = df.append(Seller(f"https://www.morphmarket.com/stores/{url}").scrape(event['SCRAPEDATE']), ignore_index=True)
 
-            except Exception as e:
-                errors = errors + 1
-                print(e)
+        df = df.append(s.seller_scraper(f"https://www.morphmarket.com/stores/{url}", retries=2, event['SCRAPEDATE'])), ignore_index=True)
 
     df.to_sql('sellers', con=event['con'], schema='morphmarket', if_exists='append', index=False)
 
