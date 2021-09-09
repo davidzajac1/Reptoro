@@ -55,6 +55,8 @@ def lambda_handler(event, context):
     df = pd.DataFrame()
     for url in urls:
 
+        time.sleep(randint(100,200)/100)
+
         df = df.append(s.animal_scraper(f"https://www.morphmarket.com{url}", event['sessionid'], retries = 2, event['scrape_date']), ignore_index=True)
 
     df.to_sql('master', con=event['con'], schema='morphmarket', if_exists='append', index=False)
