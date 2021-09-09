@@ -36,7 +36,7 @@ class Scraper:
         return BeautifulSoup(html.read(), 'html.parser')
 
     #Scrapes 1-50 results from a Morphmarket Search Results Page and returns them in a list
-    def results_page_scraper(self, sessionid, min_price, max_price, page_num, retries=0):
+    def results_page_scraper(self, sessionid, min_price, max_price, page_num, retries=0, scrape_date):
 
         url = f"https://www.morphmarket.com/us/search?epoch=2&layout=list&sort=nfs&min_price={min_price}&max_price={max_price}&page={page_num}"
 
@@ -182,14 +182,14 @@ class Scraper:
         except:
             badge_list = []
 
-        return {'breeder_url': self.url, 'title': title, 'owner': owner, 'location': location, 'email': email, 'phone': phone
+        return {'breeder_url': url, 'title': title, 'owner': owner, 'location': location, 'email': email, 'phone': phone
                ,'website': website, 'facebook': facebook, 'instagram': instagram, 'twitter': twitter
                , 'youtube': youtube, 'forum_url': forum_url, 'joined': joined, 'followers': followers
                , 'membership': membership, 'delivery_methods': delivery_methods, 'logo': logo
                , 'badge_list': badge_list, 'ratings': ratings, 'responses': responses, 'date_scraped': scrape_date}
 
     #Scrapes all the info off an individual Animal Listing on MorphMarket
-    def animal_scaper(self, url, sessionid, retries=0):
+    def animal_scaper(self, url, sessionid, retries=0, scrape_date):
 
         soup = self.get_html(url, sessionid, retries)
 
@@ -416,7 +416,7 @@ class Scraper:
         if origin != None: origin = origin.next_element\
             .next_element.next_element.text.strip().replace('"','').replace("'",'')
 
-        animal = {'url': self.url.replace('https://www.morphmarket.com', ''), 'breeder_url': breeder_url, 'date_scraped': scrape_date
+        animal = {'url': url.replace('https://www.morphmarket.com', ''), 'breeder_url': breeder_url, 'date_scraped': scrape_date
         , 'description': description, 'images': image_list, 'status': status, 'proven_breeder': proven_breeder, 'birthday': birthday
         , 'likes': likes, 'shipping': shipping, 'trades': trades, 'first_posted':first_posted, 'last_renewed': last_renewed, 'last_updated': last_updated, 'id_num': id_num, 'clutch': clutch
         , 'diet': diet, 'offers': offers, 'origin': origin, 'sex': sex, 'maturity': maturity, 'title': title, 'type': type_
