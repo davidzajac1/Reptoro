@@ -35,7 +35,7 @@ class Scraper:
 
         return BeautifulSoup(html.read(), 'html.parser')
 
-
+    #Scrapes 1-50 results from a Morphmarket Search Results Page and returns them in a list
     def results_page_scraper(self, sessionid, min_price, max_price, page_num, retries=0):
 
         url = f"https://www.morphmarket.com/us/search?epoch=2&layout=list&sort=nfs&min_price={min_price}&max_price={max_price}&page={page_num}"
@@ -91,6 +91,7 @@ class Scraper:
 
         return animals
 
+    #Scrapes info from a Seller Page on MorphMarket
     def seller_scraper(self, url, retries=0):
 
         def find_value(text):
@@ -187,7 +188,7 @@ class Scraper:
                , 'membership': membership, 'delivery_methods': delivery_methods, 'logo': logo
                , 'badge_list': badge_list, 'ratings': ratings, 'responses': responses, 'date_scraped': scrape_date}
 
-
+    #Scrapes all the info off an individual Animal Listing on MorphMarket
     def animal_scaper(self, url, sessionid, retries=0):
 
         soup = self.get_html(url, sessionid, retries)
