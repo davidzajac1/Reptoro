@@ -92,7 +92,7 @@ class Scraper:
         return animals
 
     #Scrapes info from a Seller Page on MorphMarket
-    def seller_scraper(self, url, retries=0, scrape_date):
+    def seller_scraper(self, url, scrape_date, retries=0):
 
         def find_value(text):
             try:
@@ -189,7 +189,7 @@ class Scraper:
                , 'badge_list': badge_list, 'ratings': ratings, 'responses': responses, 'date_scraped': scrape_date}
 
     #Scrapes all the info off an individual Animal Listing on MorphMarket
-    def animal_scaper(self, url, sessionid, retries=0, scrape_date):
+    def animal_scaper(self, url, sessionid, scrape_date, retries=0):
 
         soup = self.get_html(url, sessionid, retries)
 
