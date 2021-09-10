@@ -429,7 +429,3 @@ class Scraper:
         , 'weight': weight, 'currency': currency, 'price': price, 'store': store, 'quantity': quantity, 'traits': trait_list}
 
         return animal
-
-
-
-print(Scraper().animal_scraper('https://www.morphmarket.com/us/c/reptiles/pythons/ball-pythons/561240', '2lxcmlt2o1hkg8zbl5psq7mh5pjv9xzn', '2021-09-10'))
