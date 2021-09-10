@@ -189,7 +189,7 @@ class Scraper:
                , 'badge_list': badge_list, 'ratings': ratings, 'responses': responses, 'date_scraped': scrape_date}
 
     #Scrapes all the info off an individual Animal Listing on MorphMarket
-    def animal_scaper(self, url, sessionid, scrape_date, retries=0):
+    def animal_scraper(self, url, sessionid, scrape_date, retries=0):
 
         soup = self.get_html(url, sessionid, retries)
 
@@ -224,7 +224,11 @@ class Scraper:
         #quantity
         quantity = soup.find('div', {'class': 'quantity'})
 
-        if quantity != None: quantity = quantity.text.strip().replace('(','').replace(' available)', '')
+        try:
+            quantity = int(quantity.text.strip().replace('(','').replace(' available)', ''))
+        except:
+            quantity = 1
+
 
         #breeder_url
         breeder_url = details.find('dd', {'class': 'store-name-and-logo'}).a.get('href')\
@@ -293,21 +297,23 @@ class Scraper:
 
             maturity = maturity.text.strip()
 
-            if 'Baby' in maturity:
-                maturity = 'B'
-            elif 'Subadult' in maturity:
-                maturity = 'S'
+            if 'Subadult' in maturity:
+                maturity = 'Subadult'
             elif 'Adult' in maturity:
-                maturity = 'A'
+                maturity = 'Adult'
+            else:
+                maturity = 'Baby'
+        else:
+            maturity='Unknown'
 
         #sex
         sex = details.find('dt', text = ' Sex:')
 
         try:
-            if sex != None: sex = sex.next_element.next_element\
-                .next_element.i.get('alt')
+            sex = sex.next_element.next_element\
+                .next_element.i.get('alt').title()
         except:
-            sex = None
+            sex = 'Unknown'
 
         #birthday
         birthday = details.find('dt', text = ' Birth: ')
@@ -423,3 +429,7 @@ class Scraper:
         , 'weight': weight, 'currency': currency, 'price': price, 'store': store, 'quantity': quantity, 'traits': trait_list}
 
         return animal
+
+
+
+print(Scraper().animal_scraper('https://www.morphmarket.com/us/c/reptiles/pythons/ball-pythons/561240', '2lxcmlt2o1hkg8zbl5psq7mh5pjv9xzn', '2021-09-10'))

@@ -56,7 +56,7 @@ def lambda_handler(event, context):
 
         time.sleep(randint(100,200)/100)
 
-        df = df.append(s.seller_scraper(f"https://www.morphmarket.com/stores/{url}", retries=2, event['SCRAPEDATE'])), ignore_index=True)
+        df = df.append(s.seller_scraper(f"https://www.morphmarket.com/stores/{url}", event['SCRAPEDATE'], retries=2), ignore_index=True)
 
     df.to_sql('sellers', con=event['con'], schema='morphmarket', if_exists='append', index=False)
 
