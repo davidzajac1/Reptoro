@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 from urllib.request import Request, urlopen
 from datetime import datetime
 import time
+from urllib.error import HTTPError
 
 
 class Scraper:
@@ -24,14 +25,17 @@ class Scraper:
         if sessionid == None: headers.pop('Cookie')
 
         for r in range(0, retries + 1):
-            try:
+            if r == retries + 1:
                 req = Request(url, headers=headers)
                 html = urlopen(req)
-            except Exception as e:
-                if r == retries + 1:
-                    print(e)
-                else:
-                    time.sleep(10)
+                break
+            else:
+                try:
+                    req = Request(url, headers=headers)
+                    html = urlopen(req)
+                    break
+                except HTTPError as e:
+                        time.sleep(10)
 
         return BeautifulSoup(html.read(), 'html.parser')
 
