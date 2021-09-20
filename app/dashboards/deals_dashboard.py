@@ -25,7 +25,7 @@ def deals_dashboard(flask_app):
 
     dash_app.title = "Reptoro"
 
-    engine = create_engine('postgresql://postgres:supersecret@davids-personal-db.cbceh2wuhemk.us-east-2.rds.amazonaws.com:5432/davidpersonal')
+    engine = create_engine(os.environ['CONNECTIONSTRING'])
 
     Base = declarative_base()
     session = Session(engine)
@@ -140,7 +140,7 @@ def deals_dashboard(flask_app):
         stmt=f"""
             select concat('morphmarket.com', animals.url) as "URL", cast(averages.average/animals.price as integer) as ratio
             , animals.traits as "Traits", animals.price as "Price"
-            , cast(averages.average as integer) as "Price of Comparables" from 
+            , cast(averages.average as integer) as "Price of Comparables" from
             (select url, price, traits from morphmarket.master
             where status = 'for sale' and maturity = 'Baby' and "type" = '{type_}' and price between 5 and 30000) as animals
             inner join
@@ -217,7 +217,7 @@ def deals_dashboard(flask_app):
 
         return fig, comp_metrics
 
-    
+
     @dash_app.callback(Output(component_id='metrics', component_property='figure'),
          Input('comp_metrics', 'data')
     )
@@ -238,4 +238,3 @@ def deals_dashboard(flask_app):
 
 
     return dash_app
-
