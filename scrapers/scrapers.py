@@ -25,7 +25,7 @@ class Scraper:
         if sessionid == None: headers.pop('Cookie')
 
         for r in range(0, retries + 1):
-            if r == retries + 1:
+            if r == retries:
                 req = Request(url, headers=headers)
                 html = urlopen(req)
                 break
@@ -35,7 +35,7 @@ class Scraper:
                     html = urlopen(req)
                     break
                 except HTTPError as e:
-                        time.sleep(10)
+                    time.sleep(10)
 
         return BeautifulSoup(html.read(), 'html.parser')
 
