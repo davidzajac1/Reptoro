@@ -2,8 +2,11 @@
   <img width="100%" src="img/reptoro_header.PNG" alt="Header">
 </p>
 
-
 ![Language](https://img.shields.io/badge/Language-Python-success?style=flat)
+![Flask](https://img.shields.io/badge/Flask-v2.0.1-informational?style=flat)
+![pandas](https://img.shields.io/badge/pandas-v1.3.3-informational?style=flat)
+![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-v1.4.23-informational?style=flat)
+![dash](https://img.shields.io/badge/dash-v2.0.0-informational?style=flat)
 
 # A Data Visualization and Analytics Platform for the Reptile Industry
 
@@ -42,8 +45,8 @@ The new listings are then scraped and inserted into the database, the same proce
 
 Reptoro is hosted on an AWS EC2 instance using AWS ElasticBeanstalk to auto-scale and provision resources, so that the website will still function during an influx of requests.
 
-The Web Application is written in Python using [`flask`](https://github.com/pallets/flask) and [`Jinja2`](https://github.com/pallets/jinja) in tandem with a Bootstrap template to quickly build a beautiful dynamic user interface.
+The Web Application is written in Python using [`Flask`](https://github.com/pallets/flask) and [`Jinja2`](https://github.com/pallets/jinja) in tandem with a Bootstrap template to quickly build a beautiful dynamic user interface.
 
-Pandas DataFrames created using the [`sqlalchemy`](https://github.com/sqlalchemy/sqlalchemy) ORM to query the database and pass the DataFrame into the Dash framework and quickly yield interactive 2D and 3D visualizations.
+Pandas DataFrames created using the [`SQLAlchemy`](https://github.com/sqlalchemy/sqlalchemy) ORM to query the database and pass the DataFrame into the Dash framework and quickly yield interactive 2D and 3D visualizations.
 
 ![alt text](img/dashboard.JPG)
