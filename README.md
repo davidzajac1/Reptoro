@@ -24,7 +24,7 @@ Below is a flowchart of the cloud-based tech stack and ETL pipeline. [Apache Air
 
 Data is dumped into an AWS S3 bucket where it is cleaned and transformed using AWS. After the scrape is over a Lambda Function updates our PostgreSQL database.
 
-[Reptoro.com](https://www.reptoro.com) is hosted on an AWS EC2 instance, runs on a Flask framework and utilizes [`dash`](https://github.com/plotly/dash) to interactively display data on dashboards.
+Reptoro is hosted on an AWS EC2 instance, runs on a Flask framework and utilizes [`dash`](https://github.com/plotly/dash) to interactively display data on dashboards.
 
 ![alt text](img/flowchart.JPG)
 
