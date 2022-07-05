@@ -1,5 +1,7 @@
 <p align="center">
-  <img width="100%" src="img/reptoro_header.PNG" href="https://reptoro.herokuapp.com/" alt="Header">
+  <a href="https://reptoro.herokuapp.com/">
+      <img width="100%" src="img/reptoro_header.PNG" alt="Header">
+  </a>
 </p>
 
 ![Language](https://img.shields.io/badge/Language-Python-success?style=flat)
